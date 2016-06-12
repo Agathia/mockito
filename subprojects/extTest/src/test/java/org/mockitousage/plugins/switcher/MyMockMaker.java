@@ -1,10 +1,10 @@
 package org.mockitousage.plugins.switcher;
 
-import org.mockito.internal.creation.cglib.CglibMockMaker;
+import org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker;
 import org.mockito.invocation.MockHandler;
 import org.mockito.mock.MockCreationSettings;
 
-public class MyMockMaker extends CglibMockMaker {
+public class MyMockMaker extends ByteBuddyMockMaker {
 
     static ThreadLocal<Object> explosive = new ThreadLocal<Object>();
 
@@ -21,5 +21,10 @@ public class MyMockMaker extends CglibMockMaker {
 
     public void resetMock(Object mock, MockHandler newHandler, MockCreationSettings settings) {
         super.resetMock(mock, newHandler, settings);
+    }
+
+    @Override
+    public TypeMockability isTypeMockable(Class<?> type) {
+        return super.isTypeMockable(type);
     }
 }
